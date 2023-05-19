@@ -28,12 +28,19 @@ async function run() {
         const toyCollection = client.db('carsDB').collection('cars');
 
         // add and get
-        //all
+        //get all or use limit
         app.get('/all-toys', async (req, res) => {
-            const cursor = toyCollection.find();
+            const limit = parseInt(req.query.limit);
+            let cursor;
+
+            if (limit) {
+                cursor = toyCollection.find().limit(limit);
+            } else {
+                cursor = toyCollection.find();
+            }
             const result = await cursor.toArray();
             res.send(result);
-        })
+        });
 
         //specific one
         app.get('/all-toys/:id', async (req, res) => {
