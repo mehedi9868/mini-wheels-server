@@ -66,6 +66,28 @@ async function run() {
             const result = await toyCollection.insertOne(newToy);
             res.send(result);
         });
+        // put
+        app.put('/all-toys/:id', async (req, res) => {
+            const id = req.params.id;
+            const toy = req.body;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updatedToy = {
+                $set: {
+                    name: toy.name,
+                    picture: toy.picture,
+                    seller: toy.seller,
+                    email: toy.email,
+                    category: toy.category,
+                    price: toy.price,
+                    rating: toy.rating,
+                    quantity: toy.quantity,
+                    description: toy.description
+                }
+            }
+            const result = await toyCollection.updateOne(filter, updatedToy, options);
+            res.send(result);
+        });
 
         // delete 
         app.delete('/all-toys/:id', async (req, res) => {
@@ -73,7 +95,7 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             const result = await toyCollection.deleteOne(query);
             res.send(result);
-        })
+        });
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
         // // Send a ping to confirm a successful connection
