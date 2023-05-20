@@ -30,7 +30,7 @@ async function run() {
         // indexing
         const indexKeys = { name: 1 };
         const indexOptions = { name: "carName" };
-        await toyCollection.createIndex(indexKeys, indexOptions);
+        const result = await toyCollection.createIndex(indexKeys, indexOptions);
 
         app.get("/searchByName/:text", async (req, res) => {
             const searchText = req.params.text;
@@ -107,11 +107,7 @@ async function run() {
             const result = await toyCollection.deleteOne(query);
             res.send(result);
         });
-        // Connect the client to the server	(optional starting in v4.7)
-        // await client.connect();
-        // // Send a ping to confirm a successful connection
-        // await client.db("admin").command({ ping: 1 });
-        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
+       
     } finally {
 
     }
