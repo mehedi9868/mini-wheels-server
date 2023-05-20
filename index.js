@@ -26,7 +26,7 @@ async function run() {
     try {
 
         const toyCollection = client.db('carsDB').collection('cars');
-        
+
         // add and get
         //get all or use limit
         app.get('/all-toys', async (req, res) => {
@@ -66,6 +66,14 @@ async function run() {
             const result = await toyCollection.insertOne(newToy);
             res.send(result);
         });
+
+        // delete 
+        app.delete('/all-toys/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await toyCollection.deleteOne(query);
+            res.send(result);
+        })
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
         // // Send a ping to confirm a successful connection
