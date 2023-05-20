@@ -26,7 +26,7 @@ async function run() {
     try {
 
         const toyCollection = client.db('carsDB').collection('cars');
-
+        
         // add and get
         //get all or use limit
         app.get('/all-toys', async (req, res) => {
@@ -48,7 +48,17 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             const result = await toyCollection.findOne(query);
             res.send(result);
-        })
+        });
+
+        // get some
+        app.get('/toys-by-email', async (req, res) => {
+            let query = {};
+            if (req.query?.email) {
+                query = { email: req.query.email }
+            }
+            const result = await toyCollection.find(query).toArray();
+            res.send(result);
+        });
 
         // add a new toy car
         app.post('/all-toys', async (req, res) => {
