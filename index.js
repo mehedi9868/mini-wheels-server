@@ -27,6 +27,7 @@ async function run() {
 
         const toyCollection = client.db('carsDB').collection('cars');
         const imgCollection = client.db('carsDB').collection('images');
+        const discountedToyCollection = client.db('carsDB').collection('discountedToys');
 
         // indexing
         // const indexKeys = { category: 1 };
@@ -120,6 +121,13 @@ async function run() {
         // gallery
         app.get('/images', async (req, res) => {
             const cursor = imgCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
+        // discounted
+        app.get('/discountedToys', async (req, res) => {
+            const cursor = discountedToyCollection.find();
             const result = await cursor.toArray();
             res.send(result);
         });
