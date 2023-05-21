@@ -28,9 +28,9 @@ async function run() {
         const toyCollection = client.db('carsDB').collection('cars');
 
         // indexing
-        const indexKeys = { name: 1 };
-        const indexOptions = { name: "carName" };
-        const result = await toyCollection.createIndex(indexKeys, indexOptions);
+        // const indexKeys = { name: 1 };
+        // const indexOptions = { name: "carName" };
+        // const result = await toyCollection.createIndex(indexKeys, indexOptions);
 
         app.get("/searchByName/:text", async (req, res) => {
             const searchText = req.params.text;
@@ -107,7 +107,7 @@ async function run() {
             const result = await toyCollection.deleteOne(query);
             res.send(result);
         });
-       
+
     } finally {
 
     }
