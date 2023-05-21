@@ -73,7 +73,10 @@ async function run() {
             if (req.query?.email) {
                 query = { email: req.query.email }
             }
-            const result = await toyCollection.find(query).toArray();
+
+            const sortDirection = req.query.sort === 'asc' ? 1 : -1;
+
+            const result = await toyCollection.find(query).sort({ price: sortDirection }).toArray();
             res.send(result);
         });
 
