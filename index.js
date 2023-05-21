@@ -26,6 +26,7 @@ async function run() {
     try {
 
         const toyCollection = client.db('carsDB').collection('cars');
+        const imgCollection = client.db('carsDB').collection('images');
 
         // indexing
         // const indexKeys = { name: 1 };
@@ -107,6 +108,19 @@ async function run() {
             const result = await toyCollection.deleteOne(query);
             res.send(result);
         });
+
+        // gallery
+        app.get('/images', async (req, res) => {
+            const cursor = imgCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
+        // // Connect the client to the server	(optional starting in v4.7)
+        // await client.connect();
+        // // Send a ping to confirm a successful connection
+        // await client.db("admin").command({ ping: 1 });
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     } finally {
 
