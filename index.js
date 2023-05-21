@@ -29,13 +29,18 @@ async function run() {
         const imgCollection = client.db('carsDB').collection('images');
 
         // indexing
-        // const indexKeys = { name: 1 };
-        // const indexOptions = { name: "carName" };
+        // const indexKeys = { category: 1 };
+        // const indexOptions = { category: "carCategory" };
         // const result = await toyCollection.createIndex(indexKeys, indexOptions);
 
         app.get("/searchByName/:text", async (req, res) => {
             const searchText = req.params.text;
             const result = await toyCollection.find({ name: { $regex: searchText, $options: "i" } }).toArray();
+            res.send(result);
+        });
+        app.get("/searchByCategory/:text", async (req, res) => {
+            const searchText = req.params.text;
+            const result = await toyCollection.find({ category: { $regex: searchText, $options: "i" } }).toArray();
             res.send(result);
         });
 
